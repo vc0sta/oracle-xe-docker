@@ -2,8 +2,13 @@
 
 Just a docker-compose file based on [official Oracle docker images repo](https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/README.md#running-oracle-database-18c-express-edition-in-a-container)
 
+Before starting up the database, change the password in **docker-compose.yml**:
+```yaml
+    environment: 
+      - ORACLE_PWD=<your password>
+```
 
-To start the database, just run:
+Then run:
 ```sh
 docker-compose up
 ```
