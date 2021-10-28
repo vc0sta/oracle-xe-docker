@@ -54,10 +54,10 @@ ENV PATH=$ORACLE_HOME/bin:$PATH
 # -------------
 COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $INSTALL_DIR/
 
-RUN chmod ug+x $INSTALL_DIR/*.sh && \
-    sync && \
-    $INSTALL_DIR/$CHECK_SPACE_FILE && \
-    cd $INSTALL_DIR
+RUN chmod ug+x $INSTALL_DIR/*.sh
+RUN sync
+RUN $INSTALL_DIR/$CHECK_SPACE_FILE
+RUN cd $INSTALL_DIR
 
 RUN yum -y install openssl oracle-database-preinstall-18c && \
     sed -i -e 's/\(oracle\s\+hard\s\+nofile\)/# \1/' /etc/security/limits.d/oracle-database-preinstall-18c.conf && \
