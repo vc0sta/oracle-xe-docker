@@ -57,15 +57,16 @@ COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $INSTALL_DI
 RUN chmod ug+x $INSTALL_DIR/*.sh && \
     sync && \
     $INSTALL_DIR/$CHECK_SPACE_FILE && \
-    cd $INSTALL_DIR && \
-    yum -y install openssl oracle-database-preinstall-18c && \
+    cd $INSTALL_DIR
+
+RUN yum -y install openssl oracle-database-preinstall-18c && \
     sed -i -e 's/\(oracle\s\+hard\s\+nofile\)/# \1/' /etc/security/limits.d/oracle-database-preinstall-18c.conf && \
     yum -y localinstall $INSTALL_FILE_1 && \
     rm -rf /var/cache/yum && \
     rm -rf /var/tmp/yum-* && \
     mkdir -p $ORACLE_BASE/scripts/setup && \
-    mkdir $ORACLE_BASE/scripts/startup && \
-    ln -s $ORACLE_BASE/scripts /docker-entrypoint-initdb.d && \
+    mkdir $ORACLE_BASE/scripts/startup
+RUN ln -s $ORACLE_BASE/scripts /docker-entrypoint-initdb.d && \
     mkdir -p $ORACLE_BASE/oradata /home/oracle && \
     chown -R oracle:oinstall $ORACLE_BASE /home/oracle && \
     mv $INSTALL_DIR/$RUN_FILE $ORACLE_BASE/ && \
